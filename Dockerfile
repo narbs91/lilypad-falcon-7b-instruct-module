@@ -1,18 +1,26 @@
-FROM python:3.9-slim
+FROM --platform=linux/amd64 python:3.9-slim as builder
 
 WORKDIR /app
 
-# Install system dependencies
-RUN apt-get update && apt-get install -y \
+# Install build dependencies
+RUN apt-get update && \
+    apt-get install -y --no-install-recommends \
     build-essential \
     && rm -rf /var/lib/apt/lists/*
 
-# Create outputs directory
-RUN mkdir -p outputs
-
-# Copy requirements and install Python dependencies
+# Copy and install requirements
 COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
+
+FROM --platform=linux/amd64 python:3.9-slim
+
+WORKDIR /app
+
+# Copy installed packages from builder
+COPY --from=builder /usr/local/lib/python3.9/site-packages /usr/local/lib/python3.9/site-packages
+
+# Create outputs directory
+RUN mkdir -p outputs
 
 # Copy the inference script
 COPY run_inference.py .

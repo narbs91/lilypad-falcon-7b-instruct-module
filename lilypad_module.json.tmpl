@@ -2,7 +2,7 @@
     "machine": {
         "gpu": 1,
         "cpu": 1000,
-        "ram": 4000
+        "ram": 16384
     },
     "job": {
         "APIVersion": "V1beta1",
@@ -11,12 +11,12 @@
                 "Concurrency": 1
             },
             "Docker": {
-                "Entrypoint": ["python", "/workspace/run_inference.py"],
-                "WorkingDirectory": "/workspace",
+                "Entrypoint": ["python", "/app/run_inference.py"],
+                "WorkingDirectory": "/app",
                 "EnvironmentVariables": [
-                    {{ if .MODEL_INPUT }}"MODEL_INPUT={{ js .MODEL_INPUT }}"{{ else }}"INPUT_TEXT=Write a short tweet about hugging face"{{ end }}
+                    {{ if .MODEL_INPUT }}"MODEL_INPUT={{ js .MODEL_INPUT }}"{{ else }}"MODEL_INPUT=Write a short tweet about hugging face"{{ end }}
                 ],
-                "Image": "narbs91/lilypad-falcon-7b-instruct-module:latest"
+                "Image": "narbs91/lilypad-falcon-7b-instruct-modulev2:latest"
             },
             "Engine": "Docker",
             "Network": {
@@ -32,9 +32,8 @@
                 "Type": "ipfs"
             },
             "Resources": {
-                "CPU": "1",
                 "GPU": "1",
-                "Memory": "4000"
+                "Memory": "16384"
             },
             "Timeout": 600
         }

@@ -1,0 +1,42 @@
+{
+    "machine": {
+        "gpu": 1,
+        "cpu": 1000,
+        "ram": 4000
+    },
+    "job": {
+        "APIVersion": "V1beta1",
+        "Spec": {
+            "Deal": {
+                "Concurrency": 1
+            },
+            "Docker": {
+                "Entrypoint": ["python", "/workspace/run_inference.py"],
+                "WorkingDirectory": "/workspace",
+                "EnvironmentVariables": [
+                    {{ if .MODEL_INPUT }}"MODEL_INPUT={{ js .MODEL_INPUT }}"{{ else }}"INPUT_TEXT=Write a short tweet about hugging face"{{ end }}
+                ],
+                "Image": "narbs91/lilypad-falcon-7b-instruct-module:latest"
+            },
+            "Engine": "Docker",
+            "Network": {
+                "Type": "None"
+            },
+            "Outputs": [
+                {
+                    "Name": "outputs",
+                    "Path": "/outputs"
+                }
+            ],
+            "PublisherSpec": {
+                "Type": "ipfs"
+            },
+            "Resources": {
+                "CPU": "1",
+                "GPU": "1",
+                "Memory": "4000"
+            },
+            "Timeout": 600
+        }
+    }
+}

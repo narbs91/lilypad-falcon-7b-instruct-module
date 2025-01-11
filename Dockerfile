@@ -25,6 +25,11 @@ RUN mkdir -p outputs
 # Copy the inference script
 COPY run_inference.py .
 
+# Copy the download script
+COPY download_module.py .
+
+RUN python3 download_module.py
+
 # Set outputs directory as a volume
 VOLUME /app/outputs
 

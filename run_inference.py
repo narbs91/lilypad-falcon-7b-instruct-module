@@ -11,7 +11,7 @@ def main():
     # Get input from environment variable, or use default if not provided
     input_text = os.getenv("MODEL_INPUT", "Tell me a story about a giraffe.")
 
-    model = "tiiuae/falcon-7b-instruct"
+    model = "./local-falcon-7b-instruct"
 
     tokenizer = AutoTokenizer.from_pretrained(model)
     pipeline = transformers.pipeline(

@@ -13,7 +13,8 @@
                 "Entrypoint": ["python", "/app/run_inference.py"],
                 "WorkingDirectory": "/app",
                 "EnvironmentVariables": [
-                    {{ if .MODEL_INPUT }}"MODEL_INPUT={{ js .MODEL_INPUT }}"{{ else }}"MODEL_INPUT=Write a short tweet about hugging face"{{ end }}
+                    {{ if .MODEL_INPUT }}"MODEL_INPUT={{ js .MODEL_INPUT }}"{{ else }}"MODEL_INPUT=Write a haiku about Lilypads"{{ end }},
+                    "HF_HUB_OFFLINE=1"
                 ],
                 "Image": "narbs91/lilypad-falcon-7b-instruct-modulev2:latest"
             },

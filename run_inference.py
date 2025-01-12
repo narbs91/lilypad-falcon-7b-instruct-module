@@ -41,6 +41,9 @@ def main():
         pad_token_id=tokenizer.pad_token_id
     )
 
+    # Get the device that the model is on
+    device = model.device
+
     # Set up generation config
     generation_config = GenerationConfig(
         max_new_tokens=256,
@@ -68,9 +71,12 @@ def main():
         return_attention_mask=True
     )
 
+    # Move input tensors to the same device as the model
+    inputs = {k: v.to(device) for k, v in inputs.items()}
+
     outputs = model.generate(
-        input_ids=inputs.input_ids,
-        attention_mask=inputs.attention_mask
+        input_ids=inputs["input_ids"],
+        attention_mask=inputs["attention_mask"]
     )
     generated_text = tokenizer.decode(outputs[0], skip_special_tokens=True)
     
@@ -86,8 +92,10 @@ def main():
     print(f"Generated text: {clean_output}")
     print(f"Output data: {output_data}")
     
+    output_path = f'/outputs/results.json'
+    os.makedirs(os.path.dirname(output_path), exist_ok=True)
+    
     # Save to JSON file
-    output_path = os.path.join("outputs", "results.json")
     with open(output_path, "w") as f:
         json.dump(output_data, f, indent=2)
     

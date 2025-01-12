@@ -20,7 +20,8 @@ WORKDIR /app
 COPY --from=builder /usr/local/lib/python3.9/site-packages /usr/local/lib/python3.9/site-packages
 
 # Create outputs directory
-RUN mkdir -p outputs
+RUN mkdir -p /outputs
+RUN chmod 777 /outputs
 
 # Copy the inference script
 COPY run_inference.py .

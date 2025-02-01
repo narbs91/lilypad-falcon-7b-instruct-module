@@ -10,7 +10,7 @@ Run the Model
 
 a) Run the model through lilypad
     ```
-    lilypad --network demonet run github.com/narbs91/lilypad-falcon-7b-instruct-module:v1.8.0 --web3-private-key <your-private-key> -i MODEL_INPUT='Write me a haiku about Lilypads'
+    lilypad run github.com/narbs91/lilypad-falcon-7b-instruct-module:v1.8.0 --web3-private-key <your-private-key> -i MODEL_INPUT='Write me a haiku about Lilypads'
     ```
 
 b) Run the model through bacalhau
